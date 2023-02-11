@@ -112,7 +112,31 @@ private Node head; // первый элемент списка
     }
 
     @Override
-    public void remove(int index) { //ДЗ
+    public void remove(int index) { //delete //HW
+         //ДЗ
+        //0 - удаляем head
+        //другие
+        Node n = head;
+        if(index==0&&head != null)
+        {
+            head = n.getNext();
+            return;
+        }
+        while(n!=null) // что такое head
+        {
+            if(index ==1) //считаем до предыдушего элемента
+            {
+                Node toRemove = n.getNext();
+                if(toRemove == null)
+                    return;
+                Node next = toRemove.getNext();
+                n.setNext(next);
+                return;
+            }
+            index--;
+            n=n.getNext();
+        }
+
 
     }
 
@@ -129,8 +153,43 @@ private Node head; // первый элемент списка
     }
 
     @Override
-    public Iterator<Integer> iterator() {
-        return null;
+    public Iterator<Integer> iterator() { //что такое итератор
+        return new Iterator<Integer>() {
+            private int position = -1;
+
+            @Override
+            public boolean hasNext() {
+                //надо убедиться что следующая позиция после position лежит внутри size
+                //после этой операции двинуть позицию вперед
+                return position++ +1 <size();
+            }
+
+            @Override
+            public Integer next() {
+                return get(position);
+            }
+
+            @Override
+            public void remove() {
+                MyLinkedList.this.remove(position--);
+
+
+            }
+        };
+    }
+
+    public int getFirst()
+    {
+        return get(0);
+    }
+    void removeFirst()
+    {
+        remove(0);
+    }
+
+    void addFirst(int value)
+    {
+        add(0,value);
     }
 
     static class Node{
